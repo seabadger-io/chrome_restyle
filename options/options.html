@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Restyle – Rules</title>
+  <meta name="description" content="Manage per-site custom CSS and JavaScript rules." />
+  <link rel="stylesheet" href="../ui/common.css" />
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">R</div>
+      <h1>Restyle</h1>
+    </div>
+    <div class="topbar-actions">
+      <button id="btn-import" class="btn ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        Import
+      </button>
+      <button id="btn-export" class="btn ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+        Export
+      </button>
+      <input id="file-import" type="file" accept="application/json,.json" hidden />
+    </div>
+  </header>
+
+  <div id="us-banner" class="banner page-banner hidden">
+    <span>⚠️</span>
+    <span>
+      <b>Custom JavaScript is currently disabled.</b> Chrome requires you to opt in:
+      open <a href="#" id="open-ext-settings">this extension's details</a> and enable
+      <b>Allow User Scripts</b> (Chrome 138+) — or turn on <b>Developer mode</b> at the top right of
+      <code>chrome://extensions</code> on older versions. CSS works without this.
+    </span>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input id="search" type="search" placeholder="Search rules…" autocomplete="off" />
+        </div>
+        <button id="btn-new" class="btn primary" title="New rule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+      <ul id="rule-list" class="rule-list"></ul>
+      <div id="list-empty" class="list-empty hidden">No rules yet. Create one with <b>+</b>.</div>
+    </aside>
+
+    <main id="editor" class="editor hidden">
+      <div class="editor-head">
+        <input id="f-name" class="name-input" type="text" placeholder="Rule name" spellcheck="false" />
+        <span id="save-state" class="save-state"></span>
+        <label class="switch" title="Enabled">
+          <input id="f-enabled" type="checkbox" />
+          <span class="track"></span>
+        </label>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>URL patterns</h2>
+          <span class="hint">one per line</span>
+        </div>
+        <textarea id="f-patterns" class="code small-code" rows="3" spellcheck="false"
+          placeholder="hackthebox.com&#10;*://*.example.com/*&#10;/^https:\/\/news\.ycombinator\.com\/item/"></textarea>
+        <div id="pattern-errors" class="field-error hidden"></div>
+        <details class="help">
+          <summary>Pattern syntax</summary>
+          <table>
+            <tr><td><code>hackthebox.com</code></td><td>Domain and all its subdomains, any scheme and path</td></tr>
+            <tr><td><code>*://*.example.com/*</code></td><td>Wildcards: <code>*</code> matches anything; <code>*.</code> also matches the bare domain</td></tr>
+            <tr><td><code>https://example.com/docs/*</code></td><td>Only a specific path</td></tr>
+            <tr><td><code>/^https?:\/\/(a|b)\.com/i</code></td><td>Regular expression (wrapped in slashes)</td></tr>
+            <tr><td><code># note</code></td><td>Comment line, ignored</td></tr>
+          </table>
+        </details>
+        <div class="tester">
+          <input id="f-test" type="url" placeholder="Test a URL, e.g. https://app.hackthebox.com/machines" spellcheck="false" />
+          <span id="test-result" class="test-result"></span>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2><span class="chip css">CSS</span> Stylesheet</h2>
+          <span class="hint">applied instantly at page start · live-updates open tabs</span>
+        </div>
+        <textarea id="f-css" class="code" rows="12" spellcheck="false"
+          placeholder="html { filter: invert(100%) hue-rotate(180deg); }"></textarea>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2><span class="chip js">JS</span> Script</h2>
+          <span class="hint">runs on page load · reload the tab after changes</span>
+        </div>
+        <textarea id="f-js" class="code" rows="10" spellcheck="false"
+          placeholder="// e.g. document.querySelector('.cookie-banner')?.remove();"></textarea>
+        <div class="options-row">
+          <label class="field">
+            <span>Run at</span>
+            <select id="f-runat">
+              <option value="document_start">document_start (before page scripts)</option>
+              <option value="document_end">document_end (DOM ready)</option>
+              <option value="document_idle">document_idle (after load)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>World</span>
+            <select id="f-world">
+              <option value="MAIN">Page (access page variables)</option>
+              <option value="USER_SCRIPT">Isolated (sandboxed)</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="card compact">
+        <label class="check">
+          <input id="f-allframes" type="checkbox" />
+          <span>Also apply inside iframes <span class="hint">(off by default – e.g. an inverted page would double-invert its iframes)</span></span>
+        </label>
+      </section>
+
+      <div class="editor-actions">
+        <button id="btn-delete" class="btn danger">Delete</button>
+        <button id="btn-duplicate" class="btn">Duplicate</button>
+        <span class="spacer"></span>
+        <span class="hint">Changes save automatically · <kbd>⌘</kbd>/<kbd>Ctrl</kbd>+<kbd>S</kbd> to save now</span>
+      </div>
+    </main>
+
+    <main id="placeholder" class="placeholder">
+      <div class="placeholder-art">🎨</div>
+      <h2>Make the web yours</h2>
+      <p>Select a rule on the left, or create a new one to inject custom CSS or JavaScript into matching sites.</p>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="../lib/match.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

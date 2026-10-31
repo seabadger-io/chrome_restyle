@@ -1,0 +1,58 @@
+body { width: 360px; background: var(--bg); }
+
+.header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 14px 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.header-text { flex: 1; min-width: 0; }
+.header h1 { margin: 0; font-size: 15px; font-weight: 750; letter-spacing: -.01em; }
+.host {
+  font-size: 12px; color: var(--text-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+main { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; min-height: 120px; }
+.banner a { color: inherit; font-weight: 700; }
+
+.section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-3);
+}
+
+.rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rule {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: fadeUp .25s ease both;
+  transition: border-color .15s, opacity .15s;
+}
+.rule:hover { border-color: var(--border-strong); }
+.rule.off { opacity: .6; }
+.rule-main { flex: 1; min-width: 0; cursor: pointer; }
+.rule-name { font-weight: 650; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rule-meta { display: flex; gap: 5px; margin-top: 4px; align-items: center; min-width: 0; }
+.rule-pattern {
+  font-family: var(--mono); font-size: 11px; color: var(--text-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.empty {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 18px 0 8px; color: var(--text-3); font-size: 13px; text-align: center;
+}
+.empty-icon { font-size: 26px; }
+
+.footer {
+  display: flex; gap: 8px;
+  padding: 12px 14px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.footer .primary { flex: 1; }
