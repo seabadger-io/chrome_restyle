@@ -1,8 +1,10 @@
 # Restyle – per-site custom CSS & JS for Chrome
 
-Inject your own CSS and JavaScript into websites, assigned per URL pattern. Everything is stored locally (`chrome.storage.local`).
+Inject your own CSS and JavaScript into websites, configured per URL pattern. Everything is stored locally (`chrome.storage.local`).
 
-Example – fake light mode for a dark-only site (e.g. pattern `hackthebox.com`):
+I've created this extension as I prefer not to give such powers to 3rd party/marketplace Chrome extensions, hence local installs only.
+
+Example – fake light mode for a dark-only site, pattern `hackthebox.com`:
 
 ```css
 html { filter: invert(100%) hue-rotate(180deg); }
