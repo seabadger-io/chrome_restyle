@@ -4,10 +4,11 @@ Inject your own CSS and JavaScript into websites, configured per URL pattern. Ev
 
 I've created this extension as I prefer not to give such powers to 3rd party/marketplace Chrome extensions, hence local installs only.
 
-Example – fake light mode for a dark-only site, pattern `hackthebox.com`:
+Example – flip to a high contrast light mode on the dark-only hackthebox.com page:
 
 ```css
-html { filter: invert(100%) hue-rotate(180deg); }
+.text-secondary { color: #fff; }
+html { filter: sepia(60%) invert(100%) hue-rotate(200deg) contrast(90%) saturate(350%) brightness(120%); }
 ```
 
 ## Install

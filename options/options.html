@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>Restyle – Rules</title>
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="../ui/common.css" />
   <link rel="stylesheet" href="options.css" />
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">
@@ -15,11 +17,21 @@
     </div>
     <div class="topbar-actions">
       <button id="btn-import" class="btn ghost">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <path d="M7 10l5 5 5-5" />
+          <path d="M12 15V3" />
+        </svg>
         Import
       </button>
       <button id="btn-export" class="btn ghost">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <path d="M17 8l-5-5-5 5" />
+          <path d="M12 3v12" />
+        </svg>
         Export
       </button>
       <input id="file-import" type="file" accept="application/json,.json" hidden />
@@ -40,11 +52,16 @@
     <aside class="sidebar">
       <div class="sidebar-head">
         <div class="search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="M21 21l-4.3-4.3" />
+          </svg>
           <input id="search" type="search" placeholder="Search rules…" autocomplete="off" />
         </div>
         <button id="btn-new" class="btn primary" title="New rule">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
         </button>
       </div>
       <ul id="rule-list" class="rule-list"></ul>
@@ -72,15 +89,31 @@
         <details class="help">
           <summary>Pattern syntax</summary>
           <table>
-            <tr><td><code>hackthebox.com</code></td><td>Domain and all its subdomains, any scheme and path</td></tr>
-            <tr><td><code>*://*.example.com/*</code></td><td>Wildcards: <code>*</code> matches anything; <code>*.</code> also matches the bare domain</td></tr>
-            <tr><td><code>https://example.com/docs/*</code></td><td>Only a specific path</td></tr>
-            <tr><td><code>/^https?:\/\/(a|b)\.com/i</code></td><td>Regular expression (wrapped in slashes)</td></tr>
-            <tr><td><code># note</code></td><td>Comment line, ignored</td></tr>
+            <tr>
+              <td><code>hackthebox.com</code></td>
+              <td>Domain and all its subdomains, any scheme and path</td>
+            </tr>
+            <tr>
+              <td><code>*://*.example.com/*</code></td>
+              <td>Wildcards: <code>*</code> matches anything; <code>*.</code> also matches the bare domain</td>
+            </tr>
+            <tr>
+              <td><code>https://example.com/docs/*</code></td>
+              <td>Only a specific path</td>
+            </tr>
+            <tr>
+              <td><code>/^https?:\/\/(a|b)\.com/i</code></td>
+              <td>Regular expression (wrapped in slashes)</td>
+            </tr>
+            <tr>
+              <td><code># note</code></td>
+              <td>Comment line, ignored</td>
+            </tr>
           </table>
         </details>
         <div class="tester">
-          <input id="f-test" type="url" placeholder="Test a URL, e.g. https://app.hackthebox.com/machines" spellcheck="false" />
+          <input id="f-test" type="url" placeholder="Test a URL, e.g. https://app.hackthebox.com/machines"
+            spellcheck="false" />
           <span id="test-result" class="test-result"></span>
         </div>
       </section>
@@ -91,7 +124,7 @@
           <span class="hint">applied instantly at page start · live-updates open tabs</span>
         </div>
         <textarea id="f-css" class="code" rows="12" spellcheck="false"
-          placeholder="html { filter: invert(100%) hue-rotate(180deg); }"></textarea>
+          placeholder="html { filter: sepia(60%) invert(100%) hue-rotate(200deg) contrast(90%) saturate(350%) brightness(120%); }"></textarea>
       </section>
 
       <section class="card">
@@ -123,7 +156,8 @@
       <section class="card compact">
         <label class="check">
           <input id="f-allframes" type="checkbox" />
-          <span>Also apply inside iframes <span class="hint">(off by default – e.g. an inverted page would double-invert its iframes)</span></span>
+          <span>Also apply inside iframes <span class="hint">(off by default – e.g. an inverted page would double-invert
+              its iframes)</span></span>
         </label>
       </section>
 
@@ -147,4 +181,5 @@
   <script src="../lib/match.js"></script>
   <script src="options.js"></script>
 </body>
+
 </html>
